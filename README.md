@@ -5,9 +5,9 @@ To be used with "wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino", available [here](htt
 
 ## Steps:
 
-:point_right: Install [NodeJS](https://nodejs.org/en).
-:point_right: Clone this repository.
-:point_right: In Visual Studio Code, open a terminal and run:
+:point_right: Install [NodeJS](https://nodejs.org/en)
+:point_right: Clone this repository
+:point_right: In Visual Studio Code, open a terminal and run
 ```
     npm start
 ```
