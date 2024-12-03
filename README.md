@@ -2,17 +2,15 @@
 
 CanSat dashboard example using plain Javascript, HTML and CSS
 
-## Steps
+## Steps:
 
-1. Install [NodeJS]([https://docs.flutter.dev/](https://nodejs.org/en))
-2. Clone this repository
+1. Install [NodeJS]([https://docs.flutter.dev/](https://nodejs.org/en)])
+2. Clone this repository: ([https://github.com/dcota/node_serial.git])
 3. In VS Code open a terminal and run:
 ```
     npm start
 ```
-
-## Used packages:
-    Express
+## Used packages
 
 A few resources to get you started if this is your first Flutter project:
 
