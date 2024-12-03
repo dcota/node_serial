@@ -160,12 +160,13 @@
                 range: [0, ]
             },
             yaxis: {
-                range: [0, 40]
+                range: [0, 40],
+    
             }
         }
         Plotly.newPlot('temp_graph', [{
             y: [],
-            type: 'scatter',
+            mode: 'lines',
             line: {
                 color: 'rgb(55, 128, 191)',
                 width: 3
@@ -185,7 +186,7 @@
         }
         Plotly.newPlot('press_graph', [{
             y: [],
-            type: 'scatter',
+            mode: 'lines',
             line: {
                 color: 'rgb(219, 64, 82)',
                 width: 3
@@ -203,7 +204,7 @@
         }
         Plotly.newPlot('alt_graph', [{
             y: [],
-            type: 'scatter',
+            mode: 'lines',
             line: {
                 color: 'rgb(0, 177, 24)',
                 width: 3
