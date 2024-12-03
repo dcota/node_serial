@@ -1,13 +1,13 @@
 # CanSat Dashboard Example
 
-CanSat dashboard example using plain Javascript, HTML and Bootstrap CSS.
-To be used with "wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino", available [here](https://cansat.duartecota.com/codigos.html).
+CanSat dashboard example using plain Javascript, HTML and Bootstrap CSS.__
+To be used with "wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino", available [here](https://cansat.duartecota.com/codigos.html).__
 
 ## Steps:
 
-:point_right: Install [NodeJS](https://nodejs.org/en)
-:point_right: Clone this repository
-:point_right: In Visual Studio Code, open a terminal and run
+:point_right: Install [NodeJS](https://nodejs.org/en) __
+:point_right: Clone this repository __
+:point_right: In Visual Studio Code, open a terminal and run __
 ```
     npm start
 ```
