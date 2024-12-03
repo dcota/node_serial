@@ -1,5 +1,5 @@
 import express from 'express';
-import { createServer } from 'node:http';
+//import { createServer } from 'node:http';
 const app = express();
 import path from 'path';
 import { SerialPort } from 'serialport';
@@ -69,7 +69,6 @@ io.on("connection", (socket) => {
 //connect
 io.on("connection", (socket) => {
     socket.on('conn', (value) => {
-        console.log(value)
         com = value;
         if (flag == false) {
             conn()

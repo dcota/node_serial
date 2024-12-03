@@ -13,11 +13,10 @@
 </head>
 
 <body onload="getPorts()">
-
     <div id="sample"></div>
-    <div class="container mt-5 p-4" style="border-color: rgb(9, 63, 165); border-width: 2px; border-style:solid; border-radius: 10px;">
-        <h1>CanSat Dashboard</h1>
-        <div class="row  mb-2 mt-3">
+    <div class="container mt-3 pt-3 ps-3 pe-3" style="border-color: rgb(9, 63, 165); border-width: 2px; border-style:solid; border-radius: 10px;">
+        <h1 class="ms-3">CanSat Dashboard</h1>
+        <div class="row  mb-2 mt-3 ms-3">
             <div class="col-2">
                 <button type="button" class="btn btn-primary mb-2" onclick="getPorts()">OBTER PORTAS</button>
             </div>
@@ -29,7 +28,7 @@
                 <button type="button" class="btn btn-danger ms-2 my-btn" onclick="disconnect()" id="discon">DESLIGAR</button>
             </div>
         </div>
-        <div class="row mt-2">
+        <div class="row mt-2 ms-3">
             <div class="col-2">
                 <label for="temp" class="form-label">Temperatura:</label>
                 <input type="text" class="form-control text-center my-text-box" id="temp">
@@ -54,13 +53,6 @@
                 <div id="alt_graph"></div>
             </div>
         </div>
-        <div class="row">
-
-        </div>
-        <div class="row">
-
-        </div>
-
     </div>
 </body>
 
@@ -82,7 +74,6 @@
         alert(err);
     })
     socket.on('data', function(data) {
-        console.log(data);
         let JSONdata = JSON.parse(data);
         let temp = document.getElementById('temp');
         let press = document.getElementById('press');
