@@ -8,7 +8,7 @@ CanSat dashboard example using plain Javascript, HTML and CSS
 2. Clone this repository
 3. Run
 ```
-npm start
+    npm start
 ```
 
 ## Libraries:
