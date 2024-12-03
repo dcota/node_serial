@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanSat Dashboard</title>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </script>
+</head>
+
+<body onload="getPorts()">
+
+    <div id="sample"></div>
+    <div class="container mt-5 p-4" style="border-color: rgb(9, 63, 165); border-width: 2px; border-style:solid; border-radius: 10px;">
+        <h1>CanSat Dashboard</h1>
+        <div class="row  mb-2 mt-3">
+            <div class="col-2">
+                <button type="button" class="btn btn-primary mb-2" onclick="getPorts()">OBTER PORTAS</button>
+            </div>
+            <div class="col-2">
+                <select class="form-select mb-2 text-center" aria-label="Default select example" id="coms"></select>
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-success my-btn" onclick="connect()" id="con">LIGAR</button>
+                <button type="button" class="btn btn-danger ms-2 my-btn" onclick="disconnect()" id="discon">DESLIGAR</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2">
+                <label for="temp" class="form-label">Temperatura:</label>
+                <input type="text" class="form-control text-center my-text-box" id="temp">
+            </div>
+            <div class="col-2">
+                <label for="press" class="form-label">Pressão:</label>
+                <input type="text" class="form-control text-center my-text-box" id="press">
+            </div>
+            <div class="col-2">
+                <label for="alt" class="form-label">Altura:</label>
+                <input type="text" class="form-control text-center my-text-box" id="alt">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div id="temp_graph"></div>
+            </div>
+            <div class="col-4">
+                <div id="press_graph"></div>
+            </div>
+            <div class="col-4">
+                <div id="alt_graph"></div>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+
+        </div>
+
+    </div>
+</body>
+
+<style>
+    .my-text-box {
+        color: blue;
+        font-size: large;
+        font-weight: bold;
+    }
+    
+    .my-btn {
+        width: 100px;
+    }
+</style>
+
+<script>
+    const socket = io('http://localhost:3000');
+    socket.on('porterror', (err) => {
+        alert(err);
+    })
+    socket.on('data', function(data) {
+        console.log(data);
+        let JSONdata = JSON.parse(data);
+        let temp = document.getElementById('temp');
+        let press = document.getElementById('press');
+        let alt = document.getElementById('alt');
+        temp.value = JSONdata.t
+        press.value = JSONdata.p
+        alt.value = JSONdata.h
+        Plotly.extendTraces('temp_graph', {
+            y: [
+                [JSONdata.t]
+            ]
+        }, [0])
+        Plotly.extendTraces('press_graph', {
+            y: [
+                [JSONdata.p]
+            ]
+        }, [0])
+        Plotly.extendTraces('alt_graph', {
+            y: [
+                [JSONdata.h]
+            ]
+        }, [0])
+
+    });
+    socket.on('coms', function(coms) {
+        resetComs()
+        let select = document.getElementById("coms")
+        coms.forEach(element => {
+            let el = document.createElement("option")
+            el.textContent = element
+            el.value = element
+            select.appendChild(el)
+        });
+    })
+
+    function getPorts() {
+        socket.emit('getcoms');
+    }
+
+    function connect() {
+        let com = document.getElementById("coms")
+        socket.emit('conn', com.value)
+        document.getElementById("con").disabled = true;
+        document.getElementById("discon").disabled = false;
+    }
+
+    function disconnect() {
+        socket.emit('disconn')
+        document.getElementById("temp").value = ""
+        document.getElementById("press").value = ""
+        document.getElementById("alt").value = ""
+        document.getElementById("con").disabled = false;
+        document.getElementById("discon").disabled = true;
+
+    }
+
+    function resetComs() {
+        let options = document.getElementById("coms").options
+        while (options.length > 0) {
+            options.remove(0)
+        }
+    }
+
+    //temperatura
+    const temp_layout = {
+        title: 'Temperatura (Celsius)',
+        xaxis: {
+            range: [0, ]
+        },
+        yaxis: {
+            range: [0, 40]
+        }
+    }
+    Plotly.newPlot('temp_graph', [{
+        y: [],
+        type: 'scatter',
+        line: {
+            color: 'rgb(55, 128, 191)',
+            width: 3
+        }
+
+    }], temp_layout);
+
+    //pressão
+    const press_layout = {
+        title: 'Pressão (hPa)',
+        xaxis: {},
+        yaxis: {
+            range: [0, 1300]
+        }
+    }
+    Plotly.newPlot('press_graph', [{
+        y: [],
+        type: 'scatter',
+        line: {
+            color: 'rgb(219, 64, 82)',
+            width: 3
+        }
+    }], press_layout);
+
+    //altura
+    const alt_layout = {
+        title: 'Altura(m)',
+        xaxis: {},
+        yaxis: {
+            range: [0, 1300]
+        }
+    }
+    Plotly.newPlot('alt_graph', [{
+        y: [],
+        type: 'scatter',
+        line: {
+            color: 'rgb(0, 177, 24)',
+            width: 3
+        }
+
+    }], alt_layout);
+</script>
+
+</html>
