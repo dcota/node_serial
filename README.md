@@ -2,9 +2,14 @@
 
 CanSat dashboard example using plain Javascript, HTML and CSS
 
-## Getting Started
+## Steps
 
-This project is a starting point for a Flutter application.
+1. Install [NodeJS]([https://docs.flutter.dev/](https://nodejs.org/en))
+2. Clone this repository
+3. Run
+```
+npm start
+```
 
 ## Libraries:
 ###
