@@ -61,7 +61,7 @@
                 <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawPress()">Clear</button>
             </div>
             <div class="col-4">
-                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawPress()">Clear</button>
+                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawAlt()">Clear</button>
             </div>
         </div>
 
@@ -165,7 +165,7 @@
         }
         Plotly.newPlot('temp_graph', [{
             y: [],
-            type: 'scatter',
+            mode: 'lines',
             line: {
                 color: 'rgb(55, 128, 191)',
                 width: 3
@@ -185,7 +185,7 @@
         }
         Plotly.newPlot('press_graph', [{
             y: [],
-            type: 'scatter',
+            mode: 'lines',
             line: {
                 color: 'rgb(219, 64, 82)',
                 width: 3
@@ -203,7 +203,7 @@
         }
         Plotly.newPlot('alt_graph', [{
             y: [],
-            type: 'scatter',
+            mode: 'lines',
             line: {
                 color: 'rgb(0, 177, 24)',
                 width: 3
