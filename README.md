@@ -1,22 +1,15 @@
 # CanSat Dashboard Example
 
-CanSat dashboard example using plain Javascript, HTML and CSS
+CanSat dashboard example using plain Javascript, HTML and Bootstrap CSS
+To be used with "wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino", available [here]([https://cansat.duartecota.com/codigos.html])
 
 ## Steps:
 
 1. Install [NodeJS]([https://docs.flutter.dev/](https://nodejs.org/en)])
-2. Clone this repository: ([https://github.com/dcota/node_serial.git])
-3. In VS Code open a terminal and run:
+2. Clone this repository
+3. In Visual Studio Code, open a terminal and run:
 ```
     npm start
 ```
-## Used packages
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4. Open your favorite web browser and type http://localhost:3000
+5. Enjoy!
