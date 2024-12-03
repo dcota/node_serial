@@ -14,7 +14,7 @@
 
 <body onload="getPorts()">
     <div id="sample"></div>
-    <div class="container mt-3 pt-3 ps-3 pe-3" style="border-color: rgb(9, 63, 165); border-width: 2px; border-style:solid; border-radius: 10px;">
+    <div class="container mt-3 pt-2 ps-3 pe-3" style="border-color: rgb(9, 63, 165); border-width: 2px; border-style:solid; border-radius: 10px;">
         <h1 class="ms-3">CanSat Dashboard</h1>
         <div class="row  mb-2 mt-3 ms-3">
             <div class="col-2">
@@ -53,6 +53,18 @@
                 <div id="alt_graph"></div>
             </div>
         </div>
+        <div class="row text-center mb-2">
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawTemp()">Clear</button>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawPress()">Clear</button>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawPress()">Clear</button>
+            </div>
+        </div>
+
     </div>
 </body>
 
@@ -111,86 +123,94 @@
 
     function getPorts() {
         socket.emit('getcoms');
+        drawTemp();
+        drawPress();
+        drawAlt();
     }
 
     function connect() {
-        let com = document.getElementById("coms")
-        socket.emit('conn', com.value)
+        let com = document.getElementById("coms");
+        socket.emit('conn', com.value);
         document.getElementById("con").disabled = true;
         document.getElementById("discon").disabled = false;
     }
 
     function disconnect() {
         socket.emit('disconn')
-        document.getElementById("temp").value = ""
-        document.getElementById("press").value = ""
-        document.getElementById("alt").value = ""
+        document.getElementById("temp").value = "";
+        document.getElementById("press").value = "";
+        document.getElementById("alt").value = "";
         document.getElementById("con").disabled = false;
         document.getElementById("discon").disabled = true;
 
     }
 
     function resetComs() {
-        let options = document.getElementById("coms").options
+        let options = document.getElementById("coms").options;
         while (options.length > 0) {
-            options.remove(0)
+            options.remove(0);
         }
     }
 
-    //temperatura
-    const temp_layout = {
-        title: 'Temperatura (Celsius)',
-        xaxis: {
-            range: [0, ]
-        },
-        yaxis: {
-            range: [0, 40]
+    //temperatura 
+    function drawTemp() {
+        const temp_layout = {
+            title: 'Temperatura (Celsius)',
+            xaxis: {
+                range: [0, ]
+            },
+            yaxis: {
+                range: [0, 40]
+            }
         }
-    }
-    Plotly.newPlot('temp_graph', [{
-        y: [],
-        type: 'scatter',
-        line: {
-            color: 'rgb(55, 128, 191)',
-            width: 3
-        }
+        Plotly.newPlot('temp_graph', [{
+            y: [],
+            type: 'scatter',
+            line: {
+                color: 'rgb(55, 128, 191)',
+                width: 3
+            }
 
-    }], temp_layout);
+        }], temp_layout);
+    }
 
     //pressão
-    const press_layout = {
-        title: 'Pressão (hPa)',
-        xaxis: {},
-        yaxis: {
-            range: [0, 1300]
+    function drawPress() {
+        const press_layout = {
+            title: 'Pressão (hPa)',
+            xaxis: {},
+            yaxis: {
+                range: [0, 1300]
+            }
         }
+        Plotly.newPlot('press_graph', [{
+            y: [],
+            type: 'scatter',
+            line: {
+                color: 'rgb(219, 64, 82)',
+                width: 3
+            }
+        }], press_layout);
     }
-    Plotly.newPlot('press_graph', [{
-        y: [],
-        type: 'scatter',
-        line: {
-            color: 'rgb(219, 64, 82)',
-            width: 3
-        }
-    }], press_layout);
-
     //altura
-    const alt_layout = {
-        title: 'Altura(m)',
-        xaxis: {},
-        yaxis: {
-            range: [0, 1300]
+    function drawAlt() {
+        const alt_layout = {
+            title: 'Altura(m)',
+            xaxis: {},
+            yaxis: {
+                range: [0, 1300]
+            }
         }
-    }
-    Plotly.newPlot('alt_graph', [{
-        y: [],
-        type: 'scatter',
-        line: {
-            color: 'rgb(0, 177, 24)',
-            width: 3
-        }
+        Plotly.newPlot('alt_graph', [{
+            y: [],
+            type: 'scatter',
+            line: {
+                color: 'rgb(0, 177, 24)',
+                width: 3
+            }
 
-    }], alt_layout);
+        }], alt_layout);
+    }
 </script>
 
 </html>
