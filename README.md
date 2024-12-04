@@ -17,5 +17,5 @@
 > [!TIP]
 > You can also download in zip file, exxtract and run
 > ```
-    npm start
-```
+>    npm start
+> ```
