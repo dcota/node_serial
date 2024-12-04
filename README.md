@@ -15,7 +15,7 @@
 :point_right: Enjoy!
 
 > [!TIP]
-> You can also download in zip file, exxtract and run
+> You can also download this code in a zip file, extract all files, copy to a desired folder and run:
 > ```
 >    npm start
 > ```
