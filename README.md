@@ -13,3 +13,9 @@
 ```
 :point_right: Open your favorite web browser and type http://localhost:3000 \
 :point_right: Enjoy!
+
+> [!TIP]
+> You can also download this code in a zip file, extract all files, copy to a desired folder and run:
+> ```
+>    npm start
+> ```
