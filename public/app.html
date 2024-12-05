@@ -54,14 +54,32 @@
             </div>
         </div>
         <div class="row text-center mb-2">
-            <div class="col-4">
-                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawTemp()">Clear</button>
+            <div class="col-4 text-center">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-secondary" type="button" onclick="drawTemp()">Reset</button>
+                    </div>
+                    <input type="text" class="form-control text-center" placeholder="min" aria-label="" id="minT">
+                    <input type="text" class="form-control text-center" placeholder="max" aria-label="" id="maxT" >
+                  </div>
             </div>
-            <div class="col-4">
-                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawPress()">Clear</button>
+            <div class="col-4 text-center">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-secondary" type="button" onclick="drawPress()">Reset</button>
+                    </div>
+                    <input type="text" class="form-control text-center" placeholder="min" aria-label="" id="minP">
+                    <input type="text" class="form-control text-center" placeholder="max" aria-label="" id="maxP" >
+                  </div>
             </div>
-            <div class="col-4">
-                <button type="button" class="btn btn-secondary btn-sm mb-2" onclick="drawPress()">Clear</button>
+            <div class="col-4 text-center">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-secondary" type="button" onclick="drawAlt()">Reset</button>
+                    </div>
+                    <input type="text" class="form-control text-center" placeholder="min" aria-label="" id="minA">
+                    <input type="text" class="form-control text-center" placeholder="max" aria-label="" id="maxA" >
+                  </div>
             </div>
         </div>
 
@@ -69,6 +87,9 @@
 </body>
 
 <style>
+    .my-teste {
+        display:inline-block;
+    }
     .my-text-box {
         color: blue;
         font-size: large;
@@ -82,6 +103,9 @@
 
 <script>
     const socket = io('http://localhost:3000');
+    socket.on('errors', (message) => {
+        alert(message)
+    })
     socket.on('porterror', (err) => {
         alert(err);
     })
@@ -112,15 +136,103 @@
     });
     socket.on('coms', function(coms) {
         resetComs()
-        let select = document.getElementById("coms")
-        coms.forEach(element => {
+        if(coms.length==0) {
+            alert("Não há portas COM disponíveis");
+            document.getElementById("con").disabled = true;
+            document.getElementById("discon").disabled = true;
+        }
+        else {
+            document.getElementById("con").disabled = false;
+            document.getElementById("discon").disabled = true;
+            let select = document.getElementById("coms")
+            coms.forEach(element => {
             let el = document.createElement("option")
             el.textContent = element
             el.value = element
             select.appendChild(el)
         });
+        }
+        
     })
 
+    //min max temperature change event
+    let minT = document.getElementById("minT");
+    minT.addEventListener("change", ()=>{
+        yt_min = minT.value;
+        var layout_update = {
+            yaxis: {
+                range: [yt_min, yt_max],
+            }
+        };
+        var data_update = {
+        };
+        Plotly.update('temp_graph', data_update, layout_update)
+    })
+    let maxT = document.getElementById("maxT");
+    maxT.addEventListener("change", ()=>{
+        yt_max = maxT.value;
+        var layout_update = {
+            yaxis: {
+                range: [yt_min, yt_max],
+            }
+        };
+        var data_update = {
+        };
+        Plotly.update('temp_graph', data_update, layout_update)
+    })
+
+    //min max pressure change event
+    let minP = document.getElementById("minP");
+    minP.addEventListener("change", ()=>{
+        yp_min = minP.value;
+        var layout_update = {
+            yaxis: {
+                range: [yp_min, yp_max],
+            }
+        };
+        var data_update = {
+        };
+        Plotly.update('press_graph', data_update, layout_update)
+    })
+    let maxP = document.getElementById("maxP");
+    maxP.addEventListener("change", ()=>{
+        yp_max = maxP.value;
+        var layout_update = {
+            yaxis: {
+                range: [yp_min, yp_max],
+            }
+        };
+        var data_update = {
+        };
+        Plotly.update('press_graph', data_update, layout_update)
+    })
+    
+    //min max hight change event
+    let minA = document.getElementById("minA");
+    minA.addEventListener("change", ()=>{
+        ya_min = minA.value;
+        var layout_update = {
+            yaxis: {
+                range: [ya_min, ya_max],
+            }
+        };
+        var data_update = {
+        };
+        Plotly.update('alt_graph', data_update, layout_update)
+    })
+    let maxA = document.getElementById("maxA");
+    maxA.addEventListener("change", ()=>{
+        ya_max = maxA.value;
+        var layout_update = {
+            yaxis: {
+                range: [ya_min, ya_max],
+            }
+        };
+        var data_update = {
+        };
+        Plotly.update('alt_graph', data_update, layout_update)
+    })
+   
     function getPorts() {
         socket.emit('getcoms');
         drawTemp();
@@ -153,6 +265,8 @@
     }
 
     //temperatura 
+    let yt_min = 0;
+    let yt_max = 40;
     function drawTemp() {
         const temp_layout = {
             title: 'Temperatura (Celsius)',
@@ -160,7 +274,7 @@
                 range: [0, ]
             },
             yaxis: {
-                range: [0, 40],
+                range: [yt_min, yt_max],
     
             }
         }
@@ -174,14 +288,15 @@
 
         }], temp_layout);
     }
-
     //pressão
+    let yp_min = 0;
+    let yp_max = 1040;
     function drawPress() {
         const press_layout = {
             title: 'Pressão (hPa)',
             xaxis: {},
             yaxis: {
-                range: [0, 1300]
+                range: [yp_min, yp_max]
             }
         }
         Plotly.newPlot('press_graph', [{
@@ -194,12 +309,14 @@
         }], press_layout);
     }
     //altura
+    let ya_min = 0;
+    let ya_max = 1200;
     function drawAlt() {
         const alt_layout = {
             title: 'Altura(m)',
             xaxis: {},
             yaxis: {
-                range: [0, 1300]
+                range: [ya_min, ya_max]
             }
         }
         Plotly.newPlot('alt_graph', [{
