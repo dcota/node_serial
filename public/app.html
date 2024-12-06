@@ -155,7 +155,7 @@
         
     })
 
-    //min max temperature change event
+    //alterar min max gráfico temperatura
     let minT = document.getElementById("minT");
     minT.addEventListener("change", ()=>{
         yt_min = minT.value;
@@ -181,7 +181,7 @@
         Plotly.update('temp_graph', data_update, layout_update)
     })
 
-    //min max pressure change event
+    //alterar min max gráfico pressão
     let minP = document.getElementById("minP");
     minP.addEventListener("change", ()=>{
         yp_min = minP.value;
@@ -207,7 +207,7 @@
         Plotly.update('press_graph', data_update, layout_update)
     })
     
-    //min max hight change event
+    //alterar min max gráfico altura
     let minA = document.getElementById("minA");
     minA.addEventListener("change", ()=>{
         ya_min = minA.value;
@@ -233,6 +233,7 @@
         Plotly.update('alt_graph', data_update, layout_update)
     })
    
+    //pedir as COMS existentes e desenhar os gráficos
     function getPorts() {
         socket.emit('getcoms');
         drawTemp();
@@ -240,6 +241,7 @@
         drawAlt();
     }
 
+    //ligar
     function connect() {
         let com = document.getElementById("coms");
         socket.emit('conn', com.value);
@@ -247,6 +249,7 @@
         document.getElementById("discon").disabled = false;
     }
 
+    // desligar
     function disconnect() {
         socket.emit('disconn')
         document.getElementById("temp").value = "";
@@ -257,6 +260,7 @@
 
     }
 
+    //elimina as opções de COM
     function resetComs() {
         let options = document.getElementById("coms").options;
         while (options.length > 0) {
@@ -264,7 +268,7 @@
         }
     }
 
-    //temperatura 
+    //deenha o gráfico da temperatura 
     let yt_min = 0;
     let yt_max = 40;
     function drawTemp() {
@@ -288,7 +292,7 @@
 
         }], temp_layout);
     }
-    //pressão
+    //desenha o gráfico da pressão
     let yp_min = 0;
     let yp_max = 1040;
     function drawPress() {
@@ -308,7 +312,7 @@
             }
         }], press_layout);
     }
-    //altura
+    //desenha o gráfico da altura
     let ya_min = 0;
     let ya_max = 1200;
     function drawAlt() {

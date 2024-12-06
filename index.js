@@ -1,5 +1,4 @@
 import express from "express";
-//import { createServer } from 'node:http';
 const app = express();
 import path from "path";
 import { SerialPort } from "serialport";
