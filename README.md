@@ -1,7 +1,7 @@
 # CanSat Dashboard Example
 > [!NOTE]
 > CanSat dashboard example using plain Javascript, HTML and Bootstrap CSS.\
-> To be used with "wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino", available [here](https://cansat.duartecota.pt/codigos.html).
+> To be used with "wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino", available [here](https://duartecota.pt/downloads/wsCanSat_DFRobot_BMP388_v3_2024_JSON.ino).  
 
 ## Steps:
 
